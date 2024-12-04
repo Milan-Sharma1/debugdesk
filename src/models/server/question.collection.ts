@@ -44,13 +44,6 @@ export default async function createQuestionCollection() {
         databases.createStringAttribute(
             db,
             questionCollection,
-            "authorid",
-            50,
-            true
-        ),
-        databases.createStringAttribute(
-            db,
-            questionCollection,
             "tags",
             50,
             true,
@@ -68,22 +61,23 @@ export default async function createQuestionCollection() {
     console.log("Question Attributes Created");
 
     //create indexes
-    await Promise.all([
-        databases.createIndex(
-            db,
-            questionCollection,
-            "title",
-            IndexType.Fulltext,
-            ["title"],
-            ["asc"]
-        ),
-        databases.createIndex(
-            db,
-            questionCollection,
-            "content",
-            IndexType.Fulltext,
-            ["content"],
-            ["asc"]
-        ),
-    ]);
+    //some error will fix it later for now we are creating keys manully in appwrite website
+    // await Promise.all([
+    //     databases.createIndex(
+    //         db,
+    //         questionCollection,
+    //         "title",
+    //         IndexType.Fulltext,
+    //         ["title"],
+    //         ["asc"]
+    //     ),
+    //     databases.createIndex(
+    //         db,
+    //         questionCollection,
+    //         "content",
+    //         IndexType.Fulltext,
+    //         ["content"],
+    //         ["asc"]
+    //     ),
+    // ]);
 }

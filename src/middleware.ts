@@ -10,7 +10,10 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-    //apart from this below path middleware will run everywhere
+    //the matcher below means that middleware run every path expect for the api or static path
+    //for this we are using regex expression to state that middleware run every path starting with "/"
+    //The regular expression /((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)
+    // "/" matches any URL path except for the ones specified inside the negative lookahead (?! ...) part.
     matcher: [
         /*
          * Match all request paths except for the ones starting with:

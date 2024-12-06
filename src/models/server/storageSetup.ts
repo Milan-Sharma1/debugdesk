@@ -1,11 +1,17 @@
 import { Permission } from "node-appwrite";
 import { questionAttachmentBucket } from "../name";
 import { storage } from "./config";
-
+let bucketExists: boolean | null = null;
 export default async function getOrCreateStorage() {
     try {
+        if (bucketExists !== null) {
+            // Avoid repeated calls if the state is already determined
+            console.log("Storage status already resolved");
+            return;
+        }
         await storage.getBucket(questionAttachmentBucket);
         console.log("Storage Connected");
+        bucketExists = true;
     } catch (error) {
         try {
             await storage.createBucket(
@@ -25,9 +31,10 @@ export default async function getOrCreateStorage() {
             );
 
             console.log("Storage Created");
-            console.log("Storage Connected");
+            bucketExists = true;
         } catch (error) {
             console.error("Error creating storage:", error);
+            bucketExists = false;
         }
     }
 }

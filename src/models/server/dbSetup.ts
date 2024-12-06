@@ -5,9 +5,14 @@ import createQuestionCollection from "./question.collection";
 import createVoteCollection from "./vote.collection";
 
 import { databases } from "./config";
-
+type DatabasesType = typeof databases | null;
+let dbInstance: DatabasesType = null;
 export default async function getOrCreateDB() {
     try {
+        if (dbInstance) {
+            console.log("Already Connected");
+            return dbInstance; // Return cached instance
+        }
         await databases.get(db);
         console.log("Database connected");
     } catch (error) {
@@ -27,6 +32,6 @@ export default async function getOrCreateDB() {
             console.log("Error creating databases or collection", error);
         }
     }
-
+    dbInstance = databases; // Cache the instance
     return databases;
 }

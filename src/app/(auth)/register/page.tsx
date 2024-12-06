@@ -9,15 +9,10 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { account } from "@/models/client/config";
 import { registerSchema } from "@/schemas/registerSchema";
 import { useAuthStore } from "@/store/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-    IconBrandGithub,
-    IconBrandGoogle,
-    IconPhone,
-} from "@tabler/icons-react";
+import { IconBrandGoogle, IconPhone } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";

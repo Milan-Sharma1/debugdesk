@@ -55,7 +55,15 @@ export const useAuthStore = create<IAuthStore>()(
             async verifySession() {
                 try {
                     const session = await account.getSession("current");
-                    set({ session: session });
+                    const [user, { jwt }] = await Promise.all([
+                        account.get<UserPrefs>(),
+                        account.createJWT(),
+                    ]);
+                    if (!user.prefs?.reputation)
+                        await account.updatePrefs<UserPrefs>({
+                            reputation: 0,
+                        });
+                    set({ session, user, jwt });
                 } catch (error) {
                     console.log(error);
                 }
@@ -138,6 +146,9 @@ export const useAuthStore = create<IAuthStore>()(
             async phoneVerify(userId: string, secret: string) {
                 try {
                     const session = await account.createSession(userId, secret);
+                    const result = await account.updateName(
+                        `User${ID.unique()}` // name
+                    );
                     const [user, { jwt }] = await Promise.all([
                         account.get<UserPrefs>(),
                         account.createJWT(),

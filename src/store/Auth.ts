@@ -40,9 +40,7 @@ export const useAuthStore = create<IAuthStore>()(
             hydrated: false,
 
             setHydrated() {
-                set((state) => {
-                    state.hydrated = true;
-                });
+                set({ hydrated: true });
             },
             async verifySession() {
                 try {

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { persist } from "zustand/middleware";
-import { AppwriteException, ID, Models } from "appwrite";
+import { AppwriteException, ID, Models, OAuthProvider } from "appwrite";
 import { account } from "@/models/client/config";
 
 export interface UserPrefs {
@@ -27,6 +27,16 @@ interface IAuthStore {
         name: string,
         email: string,
         password: string
+    ): Promise<{ success: boolean; error?: AppwriteException | null }>;
+    googleLogin(): void;
+    phoneLogin(phone: string): Promise<{
+        success: boolean;
+        userId?: string;
+        error?: AppwriteException | null;
+    }>;
+    phoneVerify(
+        userId: string,
+        secret: string
     ): Promise<{ success: boolean; error?: AppwriteException | null }>;
 }
 
@@ -87,6 +97,56 @@ export const useAuthStore = create<IAuthStore>()(
             async createAccount(name: string, email: string, password: string) {
                 try {
                     await account.create(ID.unique(), email, password, name);
+                    return { success: true };
+                } catch (error) {
+                    console.log(error);
+                    return {
+                        success: false,
+                        error:
+                            error instanceof AppwriteException ? error : null,
+                    };
+                }
+            },
+            async googleLogin() {
+                try {
+                    account.createOAuth2Session(
+                        OAuthProvider.Google, // provider
+                        //TODO:change this url in production
+                        "http://localhost:3000/", // redirect here on success
+                        "https://localhost:3000/register" // redirect here on failure
+                    );
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+            async phoneLogin(phone: string) {
+                try {
+                    const token = await account.createPhoneToken(
+                        ID.unique(),
+                        phone
+                    );
+                    return { success: true, userId: token?.userId };
+                } catch (error) {
+                    console.log(error);
+                    return {
+                        success: false,
+                        error:
+                            error instanceof AppwriteException ? error : null,
+                    };
+                }
+            },
+            async phoneVerify(userId: string, secret: string) {
+                try {
+                    const session = await account.createSession(userId, secret);
+                    const [user, { jwt }] = await Promise.all([
+                        account.get<UserPrefs>(),
+                        account.createJWT(),
+                    ]);
+                    if (!user.prefs?.reputation)
+                        await account.updatePrefs<UserPrefs>({
+                            reputation: 0,
+                        });
+                    set({ session, user, jwt });
                     return { success: true };
                 } catch (error) {
                     console.log(error);

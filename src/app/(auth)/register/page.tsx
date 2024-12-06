@@ -3,18 +3,23 @@ import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { account } from "@/models/client/config";
 import { registerSchema } from "@/schemas/registerSchema";
 import { useAuthStore } from "@/store/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
+import {
+    IconBrandGithub,
+    IconBrandGoogle,
+    IconPhone,
+} from "@tabler/icons-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -30,7 +35,7 @@ const BottomGradient = () => {
 };
 
 const registerPage = () => {
-    const { createAccount, login } = useAuthStore();
+    const { createAccount, login, googleLogin } = useAuthStore();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const form = useForm<z.infer<typeof registerSchema>>({
@@ -41,6 +46,7 @@ const registerPage = () => {
             password: "",
         },
     });
+    const router = useRouter();
     const onSubmit = async (data: z.infer<typeof registerSchema>) => {
         //collect data
         //call the store
@@ -62,7 +68,7 @@ const registerPage = () => {
                     toast.error("Some error at login");
                 }
             }
-            if (response.error) {
+            if (response.error?.message) {
                 setError(() => response.error!.message);
             }
         } catch (error) {
@@ -162,10 +168,11 @@ const registerPage = () => {
                         className="group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black shadow-input dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
                         type="button"
                         disabled={isLoading}
+                        onClick={googleLogin}
                     >
                         <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
                         <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                            Google
+                            Continue with Google
                         </span>
                         <BottomGradient />
                     </button>
@@ -173,10 +180,13 @@ const registerPage = () => {
                         className="group/btn relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black shadow-input dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
                         type="button"
                         disabled={isLoading}
+                        onClick={() => {
+                            router.replace("/phoneLogin");
+                        }}
                     >
-                        <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+                        <IconPhone className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
                         <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                            GitHub
+                            Continue With Phone
                         </span>
                         <BottomGradient />
                     </button>

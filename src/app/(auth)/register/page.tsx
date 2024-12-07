@@ -104,10 +104,7 @@ const registerPage = () => {
                             <FormItem>
                                 <FormLabel>Full Name</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        placeholder="milan sharma"
-                                        {...field}
-                                    />
+                                    <Input placeholder="Name " {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

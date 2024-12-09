@@ -14,28 +14,34 @@ const Page = async ({
 }: {
     searchParams: { page?: string; tag?: string; search?: string };
 }) => {
-    searchParams.page ||= "1";
+    const resolvedSearchParams = await searchParams; // Await the `searchParams` to resolve the async behavior.
+
+    resolvedSearchParams.page ||= "1";
 
     const queries = [
         Query.orderDesc("$createdAt"),
-        Query.offset((+searchParams.page - 1) * 25),
+        Query.offset((+resolvedSearchParams.page - 1) * 25),
         Query.limit(25),
     ];
 
-    if (searchParams.tag) queries.push(Query.equal("tags", searchParams.tag));
-    if (searchParams.search)
+    if (resolvedSearchParams.tag)
+        queries.push(Query.equal("tags", resolvedSearchParams.tag));
+    if (resolvedSearchParams.search)
         queries.push(
             Query.or([
-                Query.search("title", searchParams.search),
-                Query.search("content", searchParams.search),
+                Query.search("title", resolvedSearchParams.search),
+                Query.search("content", resolvedSearchParams.search),
             ])
         );
 
-    const questions = await databases.listDocuments(db, questionCollection, queries);
-    console.log("Questions", questions)
+    const questions = await databases.listDocuments(
+        db,
+        questionCollection,
+        queries
+    );
 
     questions.documents = await Promise.all(
-        questions.documents.map(async ques => {
+        questions.documents.map(async (ques) => {
             const [author, answers, votes] = await Promise.all([
                 users.get<UserPrefs>(ques.authorId),
                 databases.listDocuments(db, answerCollection, [
@@ -81,7 +87,7 @@ const Page = async ({
                 <p>{questions.total} questions</p>
             </div>
             <div className="mb-4 max-w-3xl space-y-6">
-                {questions.documents.map(ques => (
+                {questions.documents.map((ques) => (
                     <QuestionCard key={ques.$id} ques={ques} />
                 ))}
             </div>

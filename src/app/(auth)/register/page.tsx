@@ -79,7 +79,7 @@ const registerPage = () => {
                 Welcome to DebugDesk
             </h2>
             <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-                Signup with riverflow if you you don&apos;t have an account.
+                Signup with DebugDesk if you you don&apos;t have an account.
                 <br /> If you already have an account,{" "}
                 <Link href="/login" className="text-orange-500 hover:underline">
                     login

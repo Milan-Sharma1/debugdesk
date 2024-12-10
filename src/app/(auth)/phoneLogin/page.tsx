@@ -31,14 +31,16 @@ function phoneLoginPage() {
         }
     };
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
-            <Card className="w-full max-w-md">
+        <div className="mx-auto w-full max-w-md rounded-none border border-solid border-white/30 bg-white p-4 shadow-input dark:bg-black md:rounded-2xl md:p-8">
+            <Card className="w-full max-w-md dark:bg-black border-none dark:text-neutral-200">
                 <CardHeader className="space-y-1">
                     <div className="flex items-center justify-center space-x-2">
                         <ShieldCheckIcon className="w-6 h-6 text-primary" />
-                        <CardTitle className="text-2xl">Secure Login</CardTitle>
+                        <CardTitle className="text-2xl dark:text-neutral-200">
+                            Secure Login
+                        </CardTitle>
                     </div>
-                    <p className="text-center text-sm text-muted-foreground">
+                    <p className="text-center text-sm text-muted-foreground dark:text-neutral-200">
                         Enter your phone number to receive a verification code
                     </p>
                 </CardHeader>

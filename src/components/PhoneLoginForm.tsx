@@ -68,7 +68,7 @@ export function UnifiedLoginForm({
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(handleSubmit)}
-                className="space-y-8"
+                className="space-y-8 "
             >
                 <div className="space-y-4">
                     <FormField
@@ -81,9 +81,10 @@ export function UnifiedLoginForm({
                                     <div className="flex items-center space-x-2">
                                         <PhoneIcon className="w-5 h-5 text-muted-foreground" />
                                         <Input
-                                            placeholder="+1 (555) 000-0000"
+                                            placeholder="9876543210"
                                             {...field}
                                             className={cn(
+                                                "border-white/30",
                                                 showOTP &&
                                                     "border-green-500 focus-visible:ring-green-500"
                                             )}
@@ -95,7 +96,6 @@ export function UnifiedLoginForm({
                             </FormItem>
                         )}
                     />
-
                     <div
                         className={cn(
                             "space-y-4 transition-all duration-300",
@@ -104,10 +104,10 @@ export function UnifiedLoginForm({
                     >
                         <div className="relative">
                             <div className="absolute inset-0 flex items-center">
-                                <span className="w-full border-t" />
+                                <span className="w-full border-t border-white/30" />
                             </div>
-                            <div className="relative flex justify-center text-xs uppercase">
-                                <span className="bg-background px-2 text-muted-foreground">
+                            <div className="relative flex justify-center text-xs uppercase text-white">
+                                <span className="bg-background px-2 text-muted-foreground text-white">
                                     Verification Code
                                 </span>
                             </div>
@@ -121,12 +121,30 @@ export function UnifiedLoginForm({
                                     <FormControl>
                                         <InputOTP maxLength={6} {...field}>
                                             <InputOTPGroup>
-                                                <InputOTPSlot index={0} />
-                                                <InputOTPSlot index={1} />
-                                                <InputOTPSlot index={2} />
-                                                <InputOTPSlot index={3} />
-                                                <InputOTPSlot index={4} />
-                                                <InputOTPSlot index={5} />
+                                                <InputOTPSlot
+                                                    className="border-white/30"
+                                                    index={0}
+                                                />
+                                                <InputOTPSlot
+                                                    className="border-white/30"
+                                                    index={1}
+                                                />
+                                                <InputOTPSlot
+                                                    className="border-white/30"
+                                                    index={2}
+                                                />
+                                                <InputOTPSlot
+                                                    className="border-white/30"
+                                                    index={3}
+                                                />
+                                                <InputOTPSlot
+                                                    className="border-white/30"
+                                                    index={4}
+                                                />
+                                                <InputOTPSlot
+                                                    className="border-white/30"
+                                                    index={5}
+                                                />
                                             </InputOTPGroup>
                                         </InputOTP>
                                     </FormControl>

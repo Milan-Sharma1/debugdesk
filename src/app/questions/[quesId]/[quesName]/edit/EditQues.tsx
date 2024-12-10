@@ -4,7 +4,7 @@ import QuestionForm from "@/components/QuestionForm";
 import { useAuthStore } from "@/store/Auth";
 import slugify from "@/utils/slugify";
 import { Models } from "appwrite";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import React from "react";
 
 const EditQues = ({ question }: { question: Models.Document }) => {

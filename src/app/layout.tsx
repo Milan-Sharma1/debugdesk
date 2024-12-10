@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Particles from "@/components/magicui/particles";
+import NextTopLoader from "nextjs-toploader";
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
     variable: "--font-geist-sans",
@@ -29,14 +30,7 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                {" "}
-                <Particles
-                    className="absolute inset-0"
-                    quantity={200}
-                    ease={100}
-                    color="#ffffff"
-                    refresh
-                />
+                <NextTopLoader />
                 {children}
                 <Toaster
                     toastOptions={{

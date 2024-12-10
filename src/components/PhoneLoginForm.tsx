@@ -47,10 +47,10 @@ export function UnifiedLoginForm({
     });
 
     const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-        setIsLoading(true); // Start loading
+        setIsLoading(true);
         try {
             if (!showOTP) {
-                await onSubmitPhone(values.phoneNumber); // Assuming this is an async operation
+                await onSubmitPhone(values.phoneNumber);
                 setShowOTP(true);
             } else if (values.otp) {
                 await onVerifyOTP(values.otp);
@@ -58,7 +58,7 @@ export function UnifiedLoginForm({
         } catch (error) {
             console.error("Error:", error);
         } finally {
-            setIsLoading(false); // End loading
+            setIsLoading(false);
         }
     };
 

@@ -48,20 +48,29 @@ const QuestionCard = ({ ques }: { ques: Models.Document }) => {
                     <div className="ml-auto flex items-center gap-1">
                         <picture>
                             <img
-                                src={avatars.getInitials(ques.author.name, 24, 24).href}
+                                src={avatars.getInitials(
+                                    ques.author.name,
+                                    24,
+                                    24
+                                )}
                                 alt={ques.author.name}
                                 className="rounded-lg"
                             />
                         </picture>
                         <Link
-                            href={`/users/${ques.author.$id}/${slugify(ques.author.name)}`}
+                            href={`/users/${ques.author.$id}/${slugify(
+                                ques.author.name
+                            )}`}
                             className="text-orange-500 hover:text-orange-600"
                         >
                             {ques.author.name}
                         </Link>
                         <strong>&quot;{ques.author.reputation}&quot;</strong>
                     </div>
-                    <span>asked {convertDateToRelativeTime(new Date(ques.$createdAt))}</span>
+                    <span>
+                        asked{" "}
+                        {convertDateToRelativeTime(new Date(ques.$createdAt))}
+                    </span>
                 </div>
             </div>
         </div>

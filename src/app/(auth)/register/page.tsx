@@ -14,7 +14,7 @@ import { useAuthStore } from "@/store/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconBrandGoogle, IconPhone } from "@tabler/icons-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";

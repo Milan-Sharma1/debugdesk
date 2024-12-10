@@ -4,7 +4,7 @@ import { databases } from "@/models/client/config";
 import { db, questionCollection } from "@/models/name";
 import { useAuthStore } from "@/store/Auth";
 import { IconTrash } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import React from "react";
 
 const DeleteQuestion = ({ questionId, authorId }: { questionId: string; authorId: string }) => {

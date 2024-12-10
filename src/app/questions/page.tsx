@@ -14,7 +14,7 @@ const Page = async ({
 }: {
     searchParams: { page?: string; tag?: string; search?: string };
 }) => {
-    const resolvedSearchParams = await searchParams; // Await the `searchParams` to resolve the async behavior.
+    const resolvedSearchParams = await searchParams;
 
     resolvedSearchParams.page ||= "1";
 

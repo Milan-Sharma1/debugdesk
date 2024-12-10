@@ -88,7 +88,6 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
 
     const create = async () => {
         if (!formData.attachment) throw new Error("Please upload an image");
-
         const storageResponse = await storage.createFile(
             questionAttachmentBucket,
             ID.unique(),

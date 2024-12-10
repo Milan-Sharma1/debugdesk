@@ -37,7 +37,7 @@ export default async function createQuestionCollection() {
         databases.createStringAttribute(
             db,
             questionCollection,
-            "authorid",
+            "authorId",
             50,
             true
         ),
@@ -53,7 +53,7 @@ export default async function createQuestionCollection() {
         databases.createStringAttribute(
             db,
             questionCollection,
-            "attachmentid",
+            "attachmentId",
             50,
             false
         ),

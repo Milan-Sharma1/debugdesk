@@ -5,13 +5,13 @@ import { useEffect } from "react";
 
 export default function Home() {
     const { verifySession, logout } = useAuthStore();
-    useEffect(() => {
-        verifySession();
-    }, []);
+    // useEffect(() => {
+    //     verifySession();
+    // }, []);
 
     return (
         <div>
-              <button onClick={logout}>Logout</button>
+            <button onClick={logout}>Logout</button>
         </div>
     );
 }

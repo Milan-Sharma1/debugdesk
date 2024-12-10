@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "sonner";
-import { ThemeProvider } from "@/components/ui/theme-provider";
+import Particles from "@/components/magicui/particles";
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
     variable: "--font-geist-sans",
@@ -25,15 +25,28 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
                 {" "}
-                <ThemeProvider attribute="class" defaultTheme="dark">
-                    {children}
-                    <Toaster />
-                </ThemeProvider>
+                <Particles
+                    className="absolute inset-0"
+                    quantity={200}
+                    ease={100}
+                    color="#ffffff"
+                    refresh
+                />
+                {children}
+                <Toaster
+                    toastOptions={{
+                        style: {
+                            background: "#1a1a1a",
+                            color: "#e0e0e0",
+                            borderColor: "#333",
+                        },
+                    }}
+                />
             </body>
         </html>
     );

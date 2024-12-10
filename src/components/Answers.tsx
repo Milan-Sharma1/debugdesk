@@ -11,6 +11,7 @@ import Comments from "./Comments";
 import slugify from "@/utils/slugify";
 import Link from "next/link";
 import { IconTrash } from "@tabler/icons-react";
+import { toast } from "sonner";
 
 const Answers = ({
     answers: _answers,
@@ -22,12 +23,13 @@ const Answers = ({
     const [answers, setAnswers] = React.useState(_answers);
     const [newAnswer, setNewAnswer] = React.useState("");
     const { user } = useAuthStore();
-
+    const [isLoading, setIsLoading] = React.useState(false);
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!newAnswer || !user) return;
 
         try {
+            setIsLoading(true);
             const response = await fetch("/api/answer", {
                 method: "POST",
                 body: JSON.stringify({
@@ -42,7 +44,7 @@ const Answers = ({
             if (!response.ok) throw data;
 
             setNewAnswer(() => "");
-            setAnswers(prev => ({
+            setAnswers((prev) => ({
                 total: prev.total + 1,
                 documents: [
                     {
@@ -55,13 +57,17 @@ const Answers = ({
                     ...prev.documents,
                 ],
             }));
+            toast.success("Success");
         } catch (error: any) {
             window.alert(error?.message || "Error creating answer");
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const deleteAnswer = async (answerId: string) => {
         try {
+            setIsLoading(true);
             const response = await fetch("/api/answer", {
                 method: "DELETE",
                 body: JSON.stringify({
@@ -73,12 +79,17 @@ const Answers = ({
 
             if (!response.ok) throw data;
 
-            setAnswers(prev => ({
+            setAnswers((prev) => ({
                 total: prev.total - 1,
-                documents: prev.documents.filter(answer => answer.$id !== answerId),
+                documents: prev.documents.filter(
+                    (answer) => answer.$id !== answerId
+                ),
             }));
+            toast.success("Success");
         } catch (error: any) {
             window.alert(error?.message || "Error deleting answer");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -98,6 +109,7 @@ const Answers = ({
                             <button
                                 className="flex h-10 w-10 items-center justify-center rounded-full border border-red-500 p-1 text-red-500 duration-200 hover:bg-red-500/10"
                                 onClick={() => deleteAnswer(answer.$id)}
+                                disabled={isLoading}
                             >
                                 <IconTrash className="h-4 w-4" />
                             </button>
@@ -151,7 +163,10 @@ const Answers = ({
                     value={newAnswer}
                     onChange={(value) => setNewAnswer(() => value || "")}
                 />
-                <button className="shrink-0 rounded bg-orange-500 px-4 py-2 font-bold text-white hover:bg-orange-600">
+                <button
+                    className="shrink-0 rounded bg-orange-500 px-4 py-2 font-bold text-white hover:bg-orange-600"
+                    disabled={isLoading}
+                >
                     Post Your Answer
                 </button>
             </form>

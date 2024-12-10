@@ -8,6 +8,7 @@ import { IconCaretUpFilled, IconCaretDownFilled } from "@tabler/icons-react";
 import { ID, Models, Query } from "appwrite";
 import { useRouter } from "nextjs-toploader/app";
 import React from "react";
+import { toast } from "sonner";
 
 const VoteButtons = ({
     type,
@@ -22,20 +23,27 @@ const VoteButtons = ({
     downvotes: Models.DocumentList<Models.Document>;
     className?: string;
 }) => {
-    const [votedDocument, setVotedDocument] = React.useState<Models.Document | null>(); // undefined means not fetched yet
-    const [voteResult, setVoteResult] = React.useState<number>(upvotes.total - downvotes.total);
-
+    const [votedDocument, setVotedDocument] =
+        React.useState<Models.Document | null>(); // undefined means not fetched yet
+    const [voteResult, setVoteResult] = React.useState<number>(
+        upvotes.total - downvotes.total
+    );
+    const [isLoading, setIsLoading] = React.useState(false);
     const { user } = useAuthStore();
     const router = useRouter();
 
     React.useEffect(() => {
         (async () => {
             if (user) {
-                const response = await databases.listDocuments(db, voteCollection, [
-                    Query.equal("type", type),
-                    Query.equal("typeId", id),
-                    Query.equal("votedById", user.$id),
-                ]);
+                const response = await databases.listDocuments(
+                    db,
+                    voteCollection,
+                    [
+                        Query.equal("type", type),
+                        Query.equal("typeId", id),
+                        Query.equal("votedById", user.$id),
+                    ]
+                );
                 setVotedDocument(() => response.documents[0] || null);
             }
         })();
@@ -47,6 +55,7 @@ const VoteButtons = ({
         if (votedDocument === undefined) return;
 
         try {
+            setIsLoading(true);
             const response = await fetch(`/api/vote`, {
                 method: "POST",
                 body: JSON.stringify({
@@ -63,8 +72,11 @@ const VoteButtons = ({
 
             setVoteResult(() => data.data.voteResult);
             setVotedDocument(() => data.data.document);
+            toast.success("Success");
         } catch (error: any) {
             window.alert(error?.message || "Something went wrong");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -74,6 +86,7 @@ const VoteButtons = ({
         if (votedDocument === undefined) return;
 
         try {
+            setIsLoading(true);
             const response = await fetch(`/api/vote`, {
                 method: "POST",
                 body: JSON.stringify({
@@ -90,13 +103,21 @@ const VoteButtons = ({
 
             setVoteResult(() => data.data.voteResult);
             setVotedDocument(() => data.data.document);
+            toast.success("Success");
         } catch (error: any) {
             window.alert(error?.message || "Something went wrong");
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
-        <div className={cn("flex shrink-0 flex-col items-center justify-start gap-y-4", className)}>
+        <div
+            className={cn(
+                "flex shrink-0 flex-col items-center justify-start gap-y-4",
+                className
+            )}
+        >
             <button
                 className={cn(
                     "flex h-10 w-10 items-center justify-center rounded-full border p-1 duration-200 hover:bg-white/10",
@@ -105,6 +126,7 @@ const VoteButtons = ({
                         : "border-white/30"
                 )}
                 onClick={toggleUpvote}
+                disabled={isLoading}
             >
                 <IconCaretUpFilled />
             </button>
@@ -117,6 +139,7 @@ const VoteButtons = ({
                         : "border-white/30"
                 )}
                 onClick={toggleDownvote}
+                disabled={isLoading}
             >
                 <IconCaretDownFilled />
             </button>

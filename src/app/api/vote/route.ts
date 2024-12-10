@@ -86,8 +86,40 @@ export async function POST(request: NextRequest) {
                             : Number(authorPrefs.reputation) - 1,
                 });
             }
+            //this is when the vote is handled
+            const [upvotes, downvotes] = await Promise.all([
+                databases.listDocuments(db, voteCollection, [
+                    Query.equal("type", type),
+                    Query.equal("typeId", typeId),
+                    Query.equal("voteStatus", "upvoted"),
+                    Query.equal("votedById", votedById),
+                    Query.limit(1), // for optimization as we only need total
+                ]),
+                databases.listDocuments(db, voteCollection, [
+                    Query.equal("type", type),
+                    Query.equal("typeId", typeId),
+                    Query.equal("voteStatus", "downvoted"),
+                    Query.equal("votedById", votedById),
+                    Query.limit(1), // for optimization as we only need total
+                ]),
+            ]);
+
+            return NextResponse.json(
+                {
+                    data: {
+                        document: doc,
+                        voteResult: upvotes.total - downvotes.total,
+                    },
+                    message: response.documents[0]
+                        ? "Vote Status Updated"
+                        : "Voted",
+                },
+                {
+                    status: 201,
+                }
+            );
         }
-        //now calculating the votes
+        //This is sitution where the frontend is only fetching the votes number
         const [upvotes, downvotes] = await Promise.all([
             databases.listDocuments(db, voteCollection, [
                 Query.equal("type", type),
@@ -104,13 +136,18 @@ export async function POST(request: NextRequest) {
                 Query.limit(1),
             ]),
         ]);
-        return NextResponse.json({
-            data: {
-                document: null,
-                voteResults: upvotes.total - downvotes.total,
+        return NextResponse.json(
+            {
+                data: {
+                    document: null,
+                    voteResult: upvotes.total - downvotes.total,
+                },
+                message: "Vote Withdrawn",
             },
-            message: "Vote handled",
-        });
+            {
+                status: 200,
+            }
+        );
     } catch (error) {
         console.log(error);
         return NextResponse.json(

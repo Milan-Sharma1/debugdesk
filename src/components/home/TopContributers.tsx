@@ -57,9 +57,10 @@ export default async function TopContributers() {
     return (
         <div className="relative flex max-h-[400px] min-h-[400px] w-full max-w-[32rem] flex-col overflow-hidden rounded-lg bg-white/10 p-6 shadow-lg">
             <AnimatedList>
-                {topUsers.users.map((user) => (
-                    <Notification user={user} key={user.$id} />
-                ))}
+                {topUsers &&
+                    topUsers.users.map((user) => (
+                        <Notification user={user} key={user.$id} />
+                    ))}
             </AnimatedList>
         </div>
     );

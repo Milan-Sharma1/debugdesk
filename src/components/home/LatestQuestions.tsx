@@ -45,9 +45,10 @@ const LatestQuestions = async () => {
     return (
         <div className="space-y-6">
             <span className="text-2xl">Latest Questions</span>
-            {questions.documents.map((question) => (
-                <QuestionCard key={question.$id} ques={question} />
-            ))}
+            {questions &&
+                questions.documents.map((question) => (
+                    <QuestionCard key={question.$id} ques={question} />
+                ))}
         </div>
     );
 };

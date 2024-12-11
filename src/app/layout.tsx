@@ -17,6 +17,7 @@ const geistMono = localFont({
     weight: "100 900",
 });
 //TODO: Add data for seo
+//TODO: add vercel analytics
 //TODO: in google auth publish the app on google console and also add icon there in oAuth screen
 export const metadata: Metadata = {
     title: "Create Next App",

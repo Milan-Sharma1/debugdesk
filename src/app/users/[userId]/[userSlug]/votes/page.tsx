@@ -12,7 +12,10 @@ const Page = async ({
     searchParams,
 }: {
     params: Promise<{ userId: string; userSlug: string }>;
-    searchParams: { page?: string; voteStatus?: "upvoted" | "downvoted" };
+    searchParams: Promise<{
+        page?: string;
+        voteStatus?: "upvoted" | "downvoted";
+    }>;
 }) => {
     const resolvedParams = await params;
     const resolvedSearchParams = await searchParams;

@@ -13,6 +13,7 @@ export default async function getOrCreateStorage() {
         console.log("Storage Connected");
         bucketExists = true;
     } catch (error) {
+        console.log(error);
         try {
             await storage.createBucket(
                 questionAttachmentBucket,

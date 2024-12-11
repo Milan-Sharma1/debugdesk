@@ -29,7 +29,7 @@ const BottomGradient = () => {
     );
 };
 
-const registerPage = () => {
+const RegisterPage = () => {
     const { createAccount, login, googleLogin } = useAuthStore();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
@@ -188,4 +188,4 @@ const registerPage = () => {
     );
 };
 
-export default registerPage;
+export default RegisterPage;

@@ -80,7 +80,7 @@ export default function IconCloud({ iconSlugs }: DynamicCloudProps) {
     }, [data, theme]);
 
     return (
-        // @ts-ignore
+        // @ts-expect-error: Cloud component has a known type mismatch that doesn't affect functionality
         <Cloud {...cloudProps}>
             <>{renderedIcons}</>
         </Cloud>

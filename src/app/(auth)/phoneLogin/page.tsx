@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { useAuthStore } from "@/store/Auth";
 import { useState } from "react";
 
-function phoneLoginPage() {
+function PhoneLoginPage() {
     const { phoneLogin, phoneVerify } = useAuthStore();
     const [userId, setUserId] = useState<string | undefined>(undefined);
     const handlePhoneSubmit = async (phone: string) => {
@@ -55,4 +55,4 @@ function phoneLoginPage() {
     );
 }
 
-export default phoneLoginPage;
+export default PhoneLoginPage;

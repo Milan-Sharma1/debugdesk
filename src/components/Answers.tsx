@@ -1,11 +1,10 @@
 "use client";
 
-import { ID, Models } from "appwrite";
+import { Models } from "appwrite";
 import React from "react";
 import VoteButtons from "./VoteButtons";
 import { useAuthStore } from "@/store/Auth";
-import { avatars, databases } from "@/models/client/config";
-import { answerCollection, db } from "@/models/name";
+import { avatars } from "@/models/client/config";
 import RTE, { MarkdownPreview } from "./RTE";
 import Comments from "./Comments";
 import slugify from "@/utils/slugify";
@@ -58,8 +57,12 @@ const Answers = ({
                 ],
             }));
             toast.success("Success");
-        } catch (error: any) {
-            window.alert(error?.message || "Error creating answer");
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                window.alert(error.message);
+            } else {
+                window.alert("Something went wrong");
+            }
         } finally {
             setIsLoading(false);
         }
@@ -86,8 +89,12 @@ const Answers = ({
                 ),
             }));
             toast.success("Success");
-        } catch (error: any) {
-            window.alert(error?.message || "Error deleting answer");
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                window.alert(error.message);
+            } else {
+                window.alert("Something went wrong");
+            }
         } finally {
             setIsLoading(false);
         }

@@ -11,7 +11,7 @@ const Page = async ({
     params,
     searchParams,
 }: {
-    params: { userId: string; userSlug: string };
+    params: Promise<{ userId: string; userSlug: string }>;
     searchParams: { page?: string; voteStatus?: "upvoted" | "downvoted" };
 }) => {
     const resolvedParams = await params;
@@ -31,12 +31,15 @@ const Page = async ({
     const votes = await databases.listDocuments(db, voteCollection, query);
 
     votes.documents = await Promise.all(
-        votes.documents.map(async vote => {
+        votes.documents.map(async (vote) => {
             const questionOfTypeQuestion =
                 vote.type === "question"
-                    ? await databases.getDocument(db, questionCollection, vote.typeId, [
-                          Query.select(["title"]),
-                      ])
+                    ? await databases.getDocument(
+                          db,
+                          questionCollection,
+                          vote.typeId,
+                          [Query.select(["title"])]
+                      )
                     : null;
 
             if (questionOfTypeQuestion) {
@@ -46,7 +49,11 @@ const Page = async ({
                 };
             }
 
-            const answer = await databases.getDocument(db, answerCollection, vote.typeId);
+            const answer = await databases.getDocument(
+                db,
+                answerCollection,
+                vote.typeId
+            );
             const questionOfTypeAnswer = await databases.getDocument(
                 db,
                 questionCollection,

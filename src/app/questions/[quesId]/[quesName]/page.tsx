@@ -29,7 +29,7 @@ import { TracingBeam } from "@/components/ui/tracing-beam";
 const Page = async ({
     params,
 }: {
-    params: { quesId: string; quesName: string };
+    params: Promise<{ quesId: string; quesName: string }>;
 }) => {
     const resolvedParams = await params;
     const [question, answers, upvotes, downvotes, comments] = await Promise.all(

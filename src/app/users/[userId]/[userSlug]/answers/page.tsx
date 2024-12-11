@@ -14,12 +14,14 @@ const Page = async ({
     params: { userId: string; userSlug: string };
     searchParams: { page?: string };
 }) => {
-    searchParams.page ||= "1";
+    const resolvedParams = await params;
+    const resolvedSearchParams = await searchParams;
+    resolvedSearchParams.page ||= "1";
 
     const queries = [
-        Query.equal("authorId", params.userId),
+        Query.equal("authorId", resolvedParams.userId),
         Query.orderDesc("$createdAt"),
-        Query.offset((+searchParams.page - 1) * 25),
+        Query.offset((+resolvedSearchParams.page - 1) * 25),
         Query.limit(25),
     ];
 

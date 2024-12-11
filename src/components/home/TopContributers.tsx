@@ -6,6 +6,7 @@ import { Models, Query } from "node-appwrite";
 import { UserPrefs } from "@/store/Auth";
 import convertDateToRelativeTime from "@/utils/relativeTime";
 import { avatars } from "@/models/client/config";
+import { unstable_noStore } from "next/cache";
 
 const Notification = ({ user }: { user: Models.User<UserPrefs> }) => {
     return (
@@ -52,6 +53,7 @@ const Notification = ({ user }: { user: Models.User<UserPrefs> }) => {
 };
 
 export default async function TopContributers() {
+    unstable_noStore(); // to disable catching and fetch data in real time
     const topUsers = await users.list<UserPrefs>([Query.limit(10)]);
 
     return (

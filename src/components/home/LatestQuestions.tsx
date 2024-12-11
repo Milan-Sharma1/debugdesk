@@ -7,10 +7,12 @@ import {
 } from "@/models/name";
 import { databases, users } from "@/models/server/config";
 import { UserPrefs } from "@/store/Auth";
+import { unstable_noStore } from "next/cache";
 import { Query } from "node-appwrite";
 import React from "react";
 
 const LatestQuestions = async () => {
+    unstable_noStore(); // to disable catching and fetch data in real time
     const questions = await databases.listDocuments(db, questionCollection, [
         Query.limit(5),
         Query.orderDesc("$createdAt"),
@@ -52,14 +54,5 @@ const LatestQuestions = async () => {
         </div>
     );
 };
-
-// Function to generate metadata and specify revalidation interval for ISR
-export async function generateMetadata() {
-    return {
-        title: "Latest Questions",
-        description: "Stay up-to-date with the latest questions in our community.",
-        revalidate: 10, // Revalidate every 60 seconds (1 minute)
-    };
-}
 
 export default LatestQuestions;

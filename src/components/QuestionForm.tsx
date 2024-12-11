@@ -10,9 +10,13 @@ import slugify from "@/utils/slugify";
 import { IconX } from "@tabler/icons-react";
 import { Models, ID } from "appwrite";
 import { useRouter } from "nextjs-toploader/app";
-import React from "react";
+import React, { useEffect } from "react";
 import { databases, storage } from "@/models/client/config";
-import { db, questionAttachmentBucket, questionCollection } from "@/models/name";
+import {
+    db,
+    questionAttachmentBucket,
+    questionCollection,
+} from "@/models/name";
 import { Confetti } from "@/components/magicui/confetti";
 
 const LabelInputContainer = ({
@@ -41,9 +45,15 @@ const LabelInputContainer = ({
  * ******************************************************************************
  */
 const QuestionForm = ({ question }: { question?: Models.Document }) => {
-    const { user } = useAuthStore();
+    const { user, session } = useAuthStore();
     const [tag, setTag] = React.useState("");
     const router = useRouter();
+
+    useEffect(() => {
+        if (!session) {
+            window.alert("To post a question you must login");
+        }
+    }, []);
 
     const [formData, setFormData] = React.useState({
         title: String(question?.title || ""),
@@ -94,13 +104,18 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
             formData.attachment
         );
 
-        const response = await databases.createDocument(db, questionCollection, ID.unique(), {
-            title: formData.title,
-            content: formData.content,
-            authorId: formData.authorId,
-            tags: Array.from(formData.tags),
-            attachmentId: storageResponse.$id,
-        });
+        const response = await databases.createDocument(
+            db,
+            questionCollection,
+            ID.unique(),
+            {
+                title: formData.title,
+                content: formData.content,
+                authorId: formData.authorId,
+                tags: Array.from(formData.tags),
+                attachmentId: storageResponse.$id,
+            }
+        );
 
         loadConfetti();
 
@@ -113,7 +128,10 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
         const attachmentId = await (async () => {
             if (!formData.attachment) return question?.attachmentId as string;
 
-            await storage.deleteFile(questionAttachmentBucket, question.attachmentId);
+            await storage.deleteFile(
+                questionAttachmentBucket,
+                question.attachmentId
+            );
 
             const file = await storage.createFile(
                 questionAttachmentBucket,
@@ -124,20 +142,28 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
             return file.$id;
         })();
 
-        const response = await databases.updateDocument(db, questionCollection, question.$id, {
-            title: formData.title,
-            content: formData.content,
-            authorId: formData.authorId,
-            tags: Array.from(formData.tags),
-            attachmentId: attachmentId,
-        });
+        const response = await databases.updateDocument(
+            db,
+            questionCollection,
+            question.$id,
+            {
+                title: formData.title,
+                content: formData.content,
+                authorId: formData.authorId,
+                tags: Array.from(formData.tags),
+                attachmentId: attachmentId,
+            }
+        );
 
         return response;
     };
 
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        if (!session) {
+            window.alert("To Post a Question Please Login");
+            return;
+        }
         // didn't check for attachment because it's optional in updating
         if (!formData.title || !formData.content || !formData.authorId) {
             setError(() => "Please fill out all fields");
@@ -150,7 +176,9 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
         try {
             const response = question ? await update() : await create();
 
-            router.push(`/questions/${response.$id}/${slugify(formData.title)}`);
+            router.push(
+                `/questions/${response.$id}/${slugify(formData.title)}`
+            );
         } catch (error: any) {
             setError(() => error.message);
         }
@@ -172,7 +200,8 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                     Title Address
                     <br />
                     <small>
-                        Be specific and imagine you&apos;re asking a question to another person.
+                        Be specific and imagine you&apos;re asking a question to
+                        another person.
                     </small>
                 </Label>
                 <Input
@@ -181,7 +210,12 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                     placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
                     type="text"
                     value={formData.title}
-                    onChange={e => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                    onChange={(e) =>
+                        setFormData((prev) => ({
+                            ...prev,
+                            title: e.target.value,
+                        }))
+                    }
                 />
             </LabelInputContainer>
             <LabelInputContainer>
@@ -189,13 +223,18 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                     What are the details of your problem?
                     <br />
                     <small>
-                        Introduce the problem and expand on what you put in the title. Minimum 20
-                        characters.
+                        Introduce the problem and expand on what you put in the
+                        title. Minimum 20 characters.
                     </small>
                 </Label>
                 <RTE
                     value={formData.content}
-                    onChange={value => setFormData(prev => ({ ...prev, content: value || "" }))}
+                    onChange={(value) =>
+                        setFormData((prev) => ({
+                            ...prev,
+                            content: value || "",
+                        }))
+                    }
                 />
             </LabelInputContainer>
             <LabelInputContainer>
@@ -203,7 +242,8 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                     Image
                     <br />
                     <small>
-                        Add image to your question to make it more clear and easier to understand.
+                        Add image to your question to make it more clear and
+                        easier to understand.
                     </small>
                 </Label>
                 <Input
@@ -212,10 +252,10 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                     accept="image/*"
                     placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
                     type="file"
-                    onChange={e => {
+                    onChange={(e) => {
                         const files = e.target.files;
                         if (!files || files.length === 0) return;
-                        setFormData(prev => ({
+                        setFormData((prev) => ({
                             ...prev,
                             attachment: files[0],
                         }));
@@ -227,8 +267,8 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                     Tags
                     <br />
                     <small>
-                        Add tags to describe what your question is about. Start typing to see
-                        suggestions.
+                        Add tags to describe what your question is about. Start
+                        typing to see suggestions.
                     </small>
                 </Label>
                 <div className="flex w-full gap-4">
@@ -239,7 +279,7 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                             placeholder="e.g. (java c objective-c)"
                             type="text"
                             value={tag}
-                            onChange={e => setTag(() => e.target.value)}
+                            onChange={(e) => setTag(() => e.target.value)}
                         />
                     </div>
                     <button
@@ -247,7 +287,7 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                         type="button"
                         onClick={() => {
                             if (tag.length === 0) return;
-                            setFormData(prev => ({
+                            setFormData((prev) => ({
                                 ...prev,
                                 tags: new Set([...Array.from(prev.tags), tag]),
                             }));
@@ -269,10 +309,12 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                                     <span>{tag}</span>
                                     <button
                                         onClick={() => {
-                                            setFormData(prev => ({
+                                            setFormData((prev) => ({
                                                 ...prev,
                                                 tags: new Set(
-                                                    Array.from(prev.tags).filter(t => t !== tag)
+                                                    Array.from(
+                                                        prev.tags
+                                                    ).filter((t) => t !== tag)
                                                 ),
                                             }));
                                         }}

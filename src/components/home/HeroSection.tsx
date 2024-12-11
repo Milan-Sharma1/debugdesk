@@ -31,3 +31,20 @@ export default async function HeroSection() {
         />
     );
 }
+
+export async function generateMetadata() {
+    // Fetch the latest questions data
+    const questions = await databases.listDocuments(db, questionCollection, [
+        Query.orderDesc("$createdAt"),
+        Query.limit(15),
+    ]);
+
+    // Return the metadata with the questions data and revalidate option
+    return {
+        props: {
+            questions: questions.documents,
+        },
+        revalidate: 10, // This will revalidate every 10 seconds
+    };
+}
+

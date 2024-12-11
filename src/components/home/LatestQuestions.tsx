@@ -53,4 +53,13 @@ const LatestQuestions = async () => {
     );
 };
 
+// Function to generate metadata and specify revalidation interval for ISR
+export async function generateMetadata() {
+    return {
+        title: "Latest Questions",
+        description: "Stay up-to-date with the latest questions in our community.",
+        revalidate: 10, // Revalidate every 60 seconds (1 minute)
+    };
+}
+
 export default LatestQuestions;

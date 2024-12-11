@@ -9,6 +9,8 @@ import { UserPrefs } from "@/store/Auth";
 import { NextRequest, NextResponse } from "next/server";
 import { ID, Query } from "node-appwrite";
 
+//diable catching in vercel for real time data
+export const dynamic = 'force-dynamic'
 export async function POST(request: NextRequest) {
     try {
         //grab the data

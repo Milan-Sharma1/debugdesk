@@ -4,6 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { ID } from "node-appwrite";
 import { UserPrefs } from "@/store/Auth";
 
+
+//diable catching in vercel for real time data
+export const dynamic = 'force-dynamic'
 export async function POST(request: NextRequest) {
     try {
         const { questionId, answer, authorId } = await request.json();

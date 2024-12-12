@@ -1,12 +1,6 @@
 "use client";
 import React from "react";
-import {
-    motion,
-    useScroll,
-    useTransform,
-    useSpring,
-    MotionValue,
-} from "framer-motion";
+import { motion, MotionValue, useMotionValue } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,43 +18,17 @@ export const HeroParallax = ({
     const firstRow = products.slice(0, 5);
     const secondRow = products.slice(5, 10);
     const thirdRow = products.slice(10, 15);
-    const ref = React.useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start start", "end start"],
-    });
 
-    const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
+    // Static tilt and other values for the initial state
+    const rotateX = useMotionValue(15); // Fixed tilt
+    const opacity = useMotionValue(0.2); // Fixed initial opacity
+    const rotateZ = useMotionValue(20); // Fixed rotation on Z-axis
+    const translateY = useMotionValue(-700); // Fixed upward position
+    const translateX = useMotionValue(0); // No movement on scroll
+    const translateXReverse = useMotionValue(0); // No reverse movement on scroll
 
-    const translateX = useSpring(
-        useTransform(scrollYProgress, [0, 1], [0, 1000]),
-        springConfig
-    );
-    const translateXReverse = useSpring(
-        useTransform(scrollYProgress, [0, 1], [0, -1000]),
-        springConfig
-    );
-    const rotateX = useSpring(
-        useTransform(scrollYProgress, [0, 0.2], [15, 0]),
-        springConfig
-    );
-    const opacity = useSpring(
-        useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
-        springConfig
-    );
-    const rotateZ = useSpring(
-        useTransform(scrollYProgress, [0, 0.2], [20, 0]),
-        springConfig
-    );
-    const translateY = useSpring(
-        useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
-        springConfig
-    );
     return (
-        <div
-            ref={ref}
-            className="relative flex h-[100vh] flex-col self-auto overflow-hidden py-40 antialiased [perspective:1000px] [transform-style:preserve-3d]"
-        >
+        <div className="relative flex h-[100vh] flex-col self-auto overflow-hidden py-40 antialiased [perspective:1000px] [transform-style:preserve-3d]">
             {header}
             <motion.div
                 style={{
@@ -112,7 +80,7 @@ export const ProductCard = ({
         link: string;
         thumbnail: string;
     };
-    translate: MotionValue<number>;
+    translate: MotionValue<number>; // Ensure translate is a MotionValue
 }) => {
     return (
         <motion.div

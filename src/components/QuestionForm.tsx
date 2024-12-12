@@ -334,7 +334,7 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
                 type="submit"
                 disabled={loading}
             >
-                {question ? "Update" : "Publish"}
+                {loading ? "Loading..." : question ? "Update" : "Publish"}
             </button>
         </form>
     );

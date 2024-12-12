@@ -38,6 +38,9 @@ interface IAuthStore {
         userId: string,
         secret: string
     ): Promise<{ success: boolean; error?: AppwriteException | null }>;
+    updateName(
+        Name: string
+    ): Promise<{ success: boolean; error?: AppwriteException | null }>;
 }
 
 export const useAuthStore = create<IAuthStore>()(
@@ -119,9 +122,8 @@ export const useAuthStore = create<IAuthStore>()(
                 try {
                     account.createOAuth2Session(
                         OAuthProvider.Google, // provider
-                        //TODO:change this url in production
-                        "http://localhost:3000/", // redirect here on success
-                        "https://localhost:3000/register" // redirect here on failure
+                        "https://debugdesk.milansharma.me/", // redirect here on success
+                        "https://debugdesk.milansharma.me/login" // redirect here on failure
                     );
                 } catch (error) {
                     console.log(error);
@@ -158,6 +160,23 @@ export const useAuthStore = create<IAuthStore>()(
                     return { success: true };
                 } catch (error) {
                     console.log(error);
+                    return {
+                        success: false,
+                        error:
+                            error instanceof AppwriteException ? error : null,
+                    };
+                }
+            },
+            async updateName(Name: string) {
+                try {
+                    await account.updateName(Name);
+                    set((state) => {
+                        if (state.user) {
+                            state.user.name = Name;
+                        }
+                    });
+                    return { success: true };
+                } catch (error) {
                     return {
                         success: false,
                         error:

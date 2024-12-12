@@ -48,7 +48,7 @@ export default function Login() {
         try {
             const response = await login(data.identifier, data.password);
             if (response?.success) {
-                toast.success("Success Redirecting To Dashboard");
+                toast.success("Success");
             }
             if (response.error?.message) {
                 setError(() => response.error!.message);

@@ -19,8 +19,7 @@ const geistMono = localFont({
 });
 //TODO: Add data for seo
 //TODO: add search with particial matching
-//TODO: add vercel analytics
-//TODO: in google auth publish the app on google console and also add icon there in oAuth screen
+//TODO: add tag searching 
 export const metadata: Metadata = {
     title: "Debug Desk | Your Knowledge-Sharing Hub",
     description:

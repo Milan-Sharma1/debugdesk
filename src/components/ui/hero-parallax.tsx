@@ -12,7 +12,7 @@ export const HeroParallax = ({
     products: {
         title: string;
         link: string;
-        thumbnail: string;
+        thumbnail: string | undefined;
     }[];
 }) => {
     const firstRow = products.slice(0, 5);
@@ -78,7 +78,7 @@ export const ProductCard = ({
     product: {
         title: string;
         link: string;
-        thumbnail: string;
+        thumbnail: string | undefined;
     };
     translate: MotionValue<number>; // Ensure translate is a MotionValue
 }) => {
@@ -97,13 +97,17 @@ export const ProductCard = ({
                 href={product.link}
                 className="block group-hover/product:shadow-2xl"
             >
-                <Image
-                    src={product.thumbnail}
-                    height="600"
-                    width="600"
-                    className="absolute inset-0 h-full w-full object-cover object-left-top"
-                    alt={product.title}
-                />
+                {product.thumbnail ? (
+                    <Image
+                        src={product.thumbnail}
+                        height={600}
+                        width={600}
+                        className="absolute inset-0 h-full w-full object-cover object-left-top"
+                        alt={product.title}
+                    />
+                ) : (
+                    "No image has been provided for this question."
+                )}
             </Link>
             <div className="pointer-events-none absolute inset-0 h-full w-full bg-black opacity-0 group-hover/product:opacity-80"></div>
             <h2 className="absolute bottom-4 left-4 text-white opacity-0 group-hover/product:opacity-100">

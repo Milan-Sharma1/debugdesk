@@ -18,6 +18,7 @@ import {
     questionCollection,
 } from "@/models/name";
 import { Confetti } from "@/components/magicui/confetti";
+import { toast } from "sonner";
 
 const LabelInputContainer = ({
     children,
@@ -188,10 +189,11 @@ const QuestionForm = ({ question }: { question?: Models.Document }) => {
             router.push(
                 `/questions/${response.$id}/${slugify(formData.title)}`
             );
+            toast.success("Success Redirecting...");
         } catch (error: any) {
+            toast.error(error?.message || "error");
             setError(() => error.message);
         }
-
         setLoading(() => false);
     };
 

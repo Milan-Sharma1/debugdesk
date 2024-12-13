@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Debug Desk 🚀
 
-## Getting Started
+A modern Q&A platform built for developers, by developers. Debug Desk aims to revolutionize how developers share knowledge and solve technical challenges.
 
-First, run the development server:
+👉 **[Visit Debug Desk Now](https://www.debugdesk.milansharma.me)**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[Report Bug](https://github.com/Milan-Sharma1/debugdesk/issues) | [Request Feature](https://github.com/Milan-Sharma1/debugdesk/issues)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Core Features
+- **Advanced Markdown Support**: Full markdown capabilities including code syntax highlighting, tables, and diagrams
+- **Smart Search**: Context-aware search that understands developer terminology and error patterns
+- **Intelligent Tagging**: Automatic suggestion and organization of technical tags
+- **Clean, Modern UI**: Distraction-free interface with dark mode support
+- **Reputation System**: Quality-focused community engagement system
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### User Experience
+- **Personalized Dashboard**: Track your contributions, reputation, and impact
+- **Custom User Profiles**: Showcase your expertise and achievements
+- **Intuitive Navigation**: Easy-to-use interface for both asking and answering questions
+- **Responsive Design**: Seamless experience across all devices
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Full Stack Framework**: [Next.js](https://nextjs.org/)
+  - Server-side rendering for optimal performance
+  - API routes for backend functionality
+  - App Router for enhanced navigation
+- **Database & Auth**: [Appwrite](https://appwrite.io/)
+  - Secure user authentication
+  - Real-time data synchronization
+  - Document-based storage
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Styling**: Tailwind CSS
+- **Markdown**: React-Markdown
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🗺️ Roadmap
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [x] Core Q&A functionality
+- [x] Markdown support
+- [x] User authentication
+- [x] Reputation system
+- [ ] Real-time code collaboration
+- [ ] Interactive code playgrounds
+- [ ] IDE plugins
+- [ ] AI-powered answer suggestions
+- [ ] Code snippet version control
+- [ ] Advanced visualization tools
 
-## Deploy on Vercel
+## 🤝 Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## 📫 Contact
+
+Email: [hello@milansharma.me](mailto:hello@milansharma.me)  
+Portfolio: [milansharma.me](https://milansharma.me)
+Milan Sharma - [@MilanSharma103](https://x.com/MilanSharma1034?s=09)
+
+Project Link: [https://github.com/Milan-Sharma1/debugdesk](https://github.com/Milan-Sharma1/debugdesk)
+
+## 🙏 Acknowledgments
+
+* [Next.js](https://nextjs.org/)
+* [Appwrite](https://appwrite.io/)
+* [Zustand](https://github.com/pmndrs/zustand)
+<!-- * All our amazing contributors -->

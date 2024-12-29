@@ -1,6 +1,6 @@
 {
   "name": "debugdesk",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -32,6 +32,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.53.2",
     "react-icon-cloud": "^4.1.4",
+    "resend": "^4.0.1",
     "sonner": "^1.7.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",

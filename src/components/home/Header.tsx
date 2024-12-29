@@ -6,10 +6,12 @@ import { useAuthStore } from "@/store/Auth";
 import slugify from "@/utils/slugify";
 import { useRouter } from "nextjs-toploader/app";
 import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
     const { user, session, verifySession } = useAuthStore();
     const router = useRouter();
+    const pathname = usePathname();
     useEffect(() => {
         if (!session) {
             verifySession();
@@ -18,6 +20,18 @@ export default function Header() {
             if (!user?.name) {
                 toast.error("You must set a username First");
                 router.replace("/phoneNameSet");
+            }
+            if (!user?.emailVerification && !user?.phone) {
+                if (
+                    pathname !== "/register/verify" &&
+                    pathname !== "/notVerified"
+                ) {
+                    toast.error("User must verify email first");
+                    window.alert(
+                        "Please check your mail and verify your account first"
+                    );
+                    router.replace("/notVerified");
+                }
             }
         }
     });

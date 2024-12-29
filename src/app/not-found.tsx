@@ -4,8 +4,8 @@ import Link from "next/link";
 
 export default function NotFound() {
     return (
-        <div className="h-screen w-full flex mt-4 justify-center bg-background">
-            <div className="container px-4 md:px-6 flex flex-col items-center text-center space-y-4">
+        <div className="h-screen w-full flex m-auto justify-center bg-background">
+            <div className="container m-auto px-4 md:px-6 flex flex-col items-center text-center space-y-4">
                 <div className="space-y-2">
                     <CloudOff className="h-24 w-24 mx-auto text-muted-foreground animate-pulse" />
                     <h1 className="text-4xl md:text-6xl font-bold text-primary">

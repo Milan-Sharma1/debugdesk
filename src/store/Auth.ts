@@ -86,6 +86,11 @@ export const useAuthStore = create<IAuthStore>()(
                             reputation: 0,
                         });
                     set({ session, user, jwt });
+                    if(!user.emailVerification){
+                        await account.createVerification(
+                            "http://localhost:3000/register/verify/"
+                        );
+                    }
                     return { success: true };
                 } catch (error) {
                     console.log(error);
@@ -107,7 +112,12 @@ export const useAuthStore = create<IAuthStore>()(
             },
             async createAccount(name: string, email: string, password: string) {
                 try {
-                    await account.create(ID.unique(), email, password, name);
+                    await account.create(
+                        ID.unique(),
+                        email,
+                        password,
+                        name
+                    );
                     return { success: true };
                 } catch (error) {
                     console.log(error);

@@ -58,7 +58,10 @@ export default function Login() {
             console.log(error);
             toast.error("Error Login Your Account");
         } finally {
-            setIsLoading(false);
+            const timeout = setTimeout(() => {
+                setIsLoading(false); // Hide loader after 3 seconds
+            }, 3000);
+            return () => clearTimeout(timeout);
         }
     };
 
@@ -128,7 +131,7 @@ export default function Login() {
                         type="submit"
                         disabled={isLoading}
                     >
-                        Log In &rarr;
+                        {isLoading ? "loading..." : "Log In →"}
                         <BottomGradient />
                     </Button>
                 </form>

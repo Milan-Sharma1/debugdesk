@@ -19,6 +19,7 @@ const NotVerified = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const handleResendVerification = async () => {
         setIsLoading(true);
+        window.alert("Please log in with the same credentials again to resend the verification email.");
         await logout();
         router.replace("/login");
         const timeout = setTimeout(() => {

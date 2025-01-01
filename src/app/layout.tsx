@@ -6,6 +6,7 @@ import NextTopLoader from "nextjs-toploader";
 import Header from "../components/home/Header";
 import Footer from "@/components/home/Footer";
 import { Analytics } from "@vercel/analytics/next";
+import { SocketProvider } from "@/context/SocketContext";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -36,20 +37,22 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <NextTopLoader showSpinner={false} />
-                <Header />
-                {children}
-                <Analytics />
-                <Toaster
-                    toastOptions={{
-                        style: {
-                            background: "#1a1a1a",
-                            color: "#e0e0e0",
-                            borderColor: "#333",
-                        },
-                    }}
-                />
-                <Footer />
+                <SocketProvider>
+                    <NextTopLoader showSpinner={false} />
+                    <Header />
+                    {children}
+                    <Analytics />
+                    <Toaster
+                        toastOptions={{
+                            style: {
+                                background: "#1a1a1a",
+                                color: "#e0e0e0",
+                                borderColor: "#333",
+                            },
+                        }}
+                    />
+                    <Footer />
+                </SocketProvider>
             </body>
         </html>
     );

@@ -8,13 +8,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import io, { Socket } from "socket.io-client";
 import { z } from "zod";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Loader2, Send } from "lucide-react";
 import { avatars } from "@/models/client/config";
 import Link from "next/link";
 import slugify from "@/utils/slugify";
+import { useSocket } from "@/context/SocketContext";
 
 export interface Message {
     username: string;
@@ -25,12 +25,13 @@ export interface Message {
 
 const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
     const [messages, setMessages] = useState<Message[]>(oldMessages);
-    const [socket, setSocket] = useState<Socket | null>(null);
+    const socket = useSocket();
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { user, hydrated } = useAuthStore();
     const { id } = useParams(); //id for sending msg in particular room
     const scrollAreaRef = useRef<HTMLDivElement>(null);
+    const joined = useRef(false);
     const form = useForm<z.infer<typeof messageValidation>>({
         resolver: zodResolver(messageValidation),
         defaultValues: {
@@ -41,7 +42,7 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
         },
     });
     useEffect(() => {
-        if (!hydrated) return;
+        if (!hydrated || !socket) return;
         if (user && id) {
             form.reset({
                 userid: user.$id,
@@ -49,19 +50,12 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
                 sentTo: String(id),
             });
         }
-        setIsLoading(true);
+        if (!joined.current) {
+            socket.emit("joinRoom", id);
+            joined.current = true;
+        }
 
-        const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL, {
-            transports: ["websocket"],
-        });
-
-        newSocket.on("connect", () => {
-            newSocket.emit("initialSetup", user?.$id);
-            newSocket.emit("joinRoom", id);
-            setIsLoading(false);
-        });
-
-        newSocket.on("message", (newMessage) => {
+        socket.on("message", (newMessage) => {
             if (
                 newMessage.sentTo === id || //this condition for ques group difference
                 (newMessage.sentTo === user?.$id && newMessage.userid === id) //this condition for private msg difference on frontend
@@ -69,23 +63,15 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
                 setMessages((prevMessages) => [...prevMessages, newMessage]);
             }
         });
-
-        setSocket(newSocket);
-
-        // Clean up the socket connection on unmount
-        return () => {
-            console.log("Disconnecting from WebSocket server...");
-            newSocket.disconnect();
-        };
-    }, [hydrated]);
+    }, [hydrated, socket]);
 
     useEffect(() => {
+        if (!hydrated) return;
         if (scrollAreaRef.current) {
-            scrollAreaRef.current.scrollTop =
-                scrollAreaRef.current.scrollHeight;
+            // Scroll to the bottom of the ScrollArea
+            scrollAreaRef.current.scrollIntoView(false);
         }
-    }, [messages]);
-
+    }, [messages, hydrated]);
     const handleMessageSubmit = (data: z.infer<typeof messageValidation>) => {
         setError("");
         if (!socket) {
@@ -115,76 +101,78 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
         );
     }
     return (
-        <div className="flex flex-col pt-24 mx-3 mb-2 h-screen bg-background">
-            <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
-                {messages.map((msg, index) => (
-                    <div
-                        key={index}
-                        className={`flex items-start space-x-2 mb-4 ${
-                            msg.userid === user?.$id
-                                ? "justify-end"
-                                : "justify-start"
-                        }`}
-                    >
-                        {msg.userid !== user?.$id && (
-                            <>
-                                <picture>
-                                    <img
-                                        src={avatars.getInitials(
-                                            msg.username,
-                                            40,
-                                            40
-                                        )}
-                                        alt={msg.username}
-                                        className="rounded-full"
-                                    />
-                                </picture>
-                            </>
-                        )}
+        <div className="flex flex-col pt-24 mx-3 mb-2 h-screen bg-background ">
+            <ScrollArea className="flex-1 p-4">
+                <div ref={scrollAreaRef}>
+                    {messages.map((msg, index) => (
                         <div
-                            className={`flex flex-col ${
+                            key={index}
+                            className={`flex items-start space-x-2 mb-4 ${
                                 msg.userid === user?.$id
-                                    ? "items-end"
-                                    : "items-start"
+                                    ? "justify-end"
+                                    : "justify-start"
                             }`}
                         >
-                            <span className="text-sm pr-2 text-muted-foreground">
-                                <Link
-                                    href={`/users/${msg.userid}/${slugify(
-                                        msg.username
-                                    )}`}
-                                    className="text-orange-500 hover:text-orange-600"
-                                >
-                                    {msg.username}
-                                </Link>
-                            </span>
+                            {msg.userid !== user?.$id && (
+                                <>
+                                    <picture>
+                                        <img
+                                            src={avatars.getInitials(
+                                                msg.username,
+                                                40,
+                                                40
+                                            )}
+                                            alt={msg.username}
+                                            className="rounded-full"
+                                        />
+                                    </picture>
+                                </>
+                            )}
                             <div
-                                className={`mt-1 px-4 py-2 rounded-lg ${
+                                className={`flex flex-col ${
                                     msg.userid === user?.$id
-                                        ? "bg-primary text-primary-foreground"
-                                        : "bg-secondary text-secondary-foreground"
+                                        ? "items-end"
+                                        : "items-start"
                                 }`}
                             >
-                                {msg.content}
+                                <span className="text-sm pr-2 text-muted-foreground">
+                                    <Link
+                                        href={`/users/${msg.userid}/${slugify(
+                                            msg.username
+                                        )}`}
+                                        className="text-orange-500 hover:text-orange-600"
+                                    >
+                                        {msg.username}
+                                    </Link>
+                                </span>
+                                <div
+                                    className={`mt-1 px-4 py-2 rounded-lg ${
+                                        msg.userid === user?.$id
+                                            ? "bg-primary text-primary-foreground"
+                                            : "bg-secondary text-secondary-foreground"
+                                    }`}
+                                >
+                                    {msg.content}
+                                </div>
                             </div>
+                            {msg.userid === user?.$id && (
+                                <>
+                                    <picture>
+                                        <img
+                                            src={avatars.getInitials(
+                                                msg.username,
+                                                40,
+                                                40
+                                            )}
+                                            alt={msg.username}
+                                            className="rounded-full"
+                                        />
+                                    </picture>
+                                </>
+                            )}
                         </div>
-                        {msg.userid === user?.$id && (
-                            <>
-                                <picture>
-                                    <img
-                                        src={avatars.getInitials(
-                                            msg.username,
-                                            40,
-                                            40
-                                        )}
-                                        alt={msg.username}
-                                        className="rounded-full"
-                                    />
-                                </picture>
-                            </>
-                        )}
-                    </div>
-                ))}
+                    ))}
+                </div>
             </ScrollArea>
 
             <Form {...form}>

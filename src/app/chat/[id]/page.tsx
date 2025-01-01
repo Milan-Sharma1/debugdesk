@@ -47,7 +47,6 @@ const Page = async ({
 }) => {
     const { id } = await params;
     const { userid } = await searchParams;
-    console.log(userid);
     // Fetch old messages
     const messages = await fetchOldMessages(id, userid);
 

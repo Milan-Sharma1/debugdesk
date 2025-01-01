@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import { IconHome, IconMessage, IconWorldQuestion } from "@tabler/icons-react";
 import { useAuthStore } from "@/store/Auth";
@@ -7,21 +7,23 @@ import slugify from "@/utils/slugify";
 import { useRouter } from "nextjs-toploader/app";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
+import { useSocket } from "@/context/SocketContext";
 
 export default function Header() {
-    const { user, session, verifySession } = useAuthStore();
+    const { user, session, verifySession, hydrated } = useAuthStore();
     const router = useRouter();
     const pathname = usePathname();
     useEffect(() => {
+        if (!hydrated) return;
         if (!session) {
             verifySession();
         }
-        if (session) {
-            if (!user?.name) {
+        if (session && user) {
+            if (!user.name) {
                 toast.error("You must set a username First");
                 router.replace("/phoneNameSet");
             }
-            if (!user?.emailVerification && !user?.phone) {
+            if (!user.emailVerification && !user.phone) {
                 if (
                     pathname !== "/register/verify" &&
                     pathname !== "/notVerified"
@@ -34,7 +36,7 @@ export default function Header() {
                 }
             }
         }
-    });
+    }, [session, user, pathname, router, hydrated]);
     const navItems = [
         {
             name: "Home",

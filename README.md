@@ -41,7 +41,7 @@ A modern Q&A platform built for developers, by developers. Debug Desk aims to re
 - [x] Markdown support
 - [x] User authentication
 - [x] Reputation system
-- [ ] Real-time code collaboration
+- [x] Real-time code collaboration
 - [ ] Interactive code playgrounds
 - [ ] IDE plugins
 - [ ] AI-powered answer suggestions

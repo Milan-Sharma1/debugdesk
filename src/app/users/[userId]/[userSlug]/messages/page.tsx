@@ -6,8 +6,7 @@ import { useAuthStore } from "@/store/Auth";
 import convertDateToRelativeTime from "@/utils/relativeTime";
 import { Query } from "appwrite";
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { useEffect, useState } from "react";
 
 interface Message extends m {

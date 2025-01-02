@@ -24,6 +24,7 @@ import React from "react";
 import DeleteQuestion from "./DeleteQuestion";
 import EditQuestion from "./EditQuestion";
 import { TracingBeam } from "@/components/ui/tracing-beam";
+import CollaborateLive from "./CollaborateLive";
 
 const Page = async ({
     params,
@@ -159,16 +160,19 @@ const Page = async ({
                             <span>Votes {upvotes.total + downvotes.total}</span>
                         </div>
                     </div>
-                    <Link
-                        href="/questions/ask"
-                        className="ml-auto inline-block shrink-0"
-                    >
-                        <ShimmerButton className="shadow-2xl">
-                            <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
-                                Ask a question
-                            </span>
-                        </ShimmerButton>
-                    </Link>
+                    <span className="flex flex-row w-fit gap-2 items-center justify-center">
+                        <CollaborateLive quesId={question.$id} />
+                        <Link
+                            href="/questions/ask"
+                            className="ml-auto inline-block shrink-0"
+                        >
+                            <ShimmerButton className="shadow-2xl">
+                                <span className="whitespace-pre-wrap text-center text-sm font-normal leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-sm">
+                                    Ask a question
+                                </span>
+                            </ShimmerButton>
+                        </Link>
+                    </span>
                 </div>
                 <hr className="my-4 border-white/40" />
                 <div className="flex gap-4">

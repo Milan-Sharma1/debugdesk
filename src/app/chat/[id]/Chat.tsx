@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { messageValidation } from "@/schemas/messageSchema";
 import { useAuthStore } from "@/store/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,7 +19,7 @@ import { Copy, Check } from "lucide-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 export interface Message {
-    id?: string;
+    id?: string; //appwrite document id retrived from appwrite while fetching old msgs
     username: string;
     userid: string;
     content: string;

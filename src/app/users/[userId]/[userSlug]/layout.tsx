@@ -6,6 +6,7 @@ import React from "react";
 import EditButton from "./EditButton";
 import Navbar from "./Navbar";
 import { IconClockFilled, IconUserFilled } from "@tabler/icons-react";
+import MessageButton from "./MessageButton";
 
 const Layout = async ({
     children,
@@ -52,7 +53,8 @@ const Layout = async ({
                                 )}
                             </p>
                         </div>
-                        <div className="shrink-0">
+                        <div className="flex flex-row gap-2">
+                            <MessageButton />
                             <EditButton />
                         </div>
                     </div>

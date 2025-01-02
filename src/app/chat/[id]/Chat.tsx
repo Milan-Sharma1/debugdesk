@@ -15,8 +15,12 @@ import { avatars } from "@/models/client/config";
 import Link from "next/link";
 import slugify from "@/utils/slugify";
 import { useSocket } from "@/context/SocketContext";
-
+import { Textarea } from "@/components/ui/textarea";
+import { Copy, Check } from "lucide-react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 export interface Message {
+    id?: string;
     username: string;
     userid: string;
     content: string;
@@ -28,6 +32,7 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
     const socket = useSocket();
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [copiedId, setCopiedId] = useState<string | null>(null);
     const { user, hydrated } = useAuthStore();
     const { id } = useParams(); //id for sending msg in particular room
     const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -100,6 +105,25 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
             </div>
         );
     }
+    //TODO:improve this function
+    const isCodeSnippet = (content: string) => {
+        return (
+            content.includes("className=") ||
+            content.includes("<div") ||
+            content.includes("<p") ||
+            (content.includes("{") &&
+                content.includes("}") &&
+                (content.includes("function") ||
+                    content.includes("=>") ||
+                    content.includes("class") ||
+                    content.includes("const")))
+        );
+    };
+    const copyToClipboard = async (content: string, id: string) => {
+        await navigator.clipboard.writeText(content);
+        setCopiedId(id);
+        setTimeout(() => setCopiedId(null), 2000);
+    };
     return (
         <div className="flex flex-col pt-24 mx-3 mb-2 h-screen bg-background ">
             <ScrollArea className="flex-1 p-4">
@@ -146,13 +170,57 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
                                     </Link>
                                 </span>
                                 <div
-                                    className={`mt-1 px-4 py-2 rounded-lg ${
-                                        msg.userid === user?.$id
-                                            ? "bg-primary text-primary-foreground"
-                                            : "bg-secondary text-secondary-foreground"
-                                    }`}
+                                    className={`mt-1 px-4 py-2 rounded-lg max-w-[280px] sm:max-w-[400px] md:max-w-lg break-words
+                                                ${
+                                                    msg.userid === user?.$id
+                                                        ? "bg-primary text-primary-foreground"
+                                                        : "bg-secondary text-secondary-foreground"
+                                                }`}
                                 >
-                                    {msg.content}
+                                    {isCodeSnippet(msg.content) ? (
+                                        <div className="relative">
+                                            <div className="bg-black flex items-center justify-between px-4 py-2 border-b border-zinc-800">
+                                                <span className="text-xs text-zinc-400">
+                                                    JavaScript
+                                                </span>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-8 w-8 text-zinc-400 hover:text-zinc-300"
+                                                    onClick={() =>
+                                                        copyToClipboard(
+                                                            msg.content,
+                                                            msg.id || ""
+                                                        )
+                                                    }
+                                                >
+                                                    {copiedId === msg.id ? (
+                                                        <Check className="h-4 w-4" />
+                                                    ) : (
+                                                        <Copy className="h-4 w-4" />
+                                                    )}
+                                                    <span className="sr-only">
+                                                        Copy code
+                                                    </span>
+                                                </Button>
+                                            </div>
+                                            <SyntaxHighlighter
+                                                language="javascript"
+                                                style={vscDarkPlus}
+                                                customStyle={{
+                                                    margin: 0,
+                                                    background: "black",
+                                                    padding: "1rem",
+                                                }}
+                                            >
+                                                {msg.content}
+                                            </SyntaxHighlighter>
+                                        </div>
+                                    ) : (
+                                        <p className="text-sm leading-relaxed overflow-x-auto whitespace-pre-wrap break-all ">
+                                            {msg.content}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                             {msg.userid === user?.$id && (
@@ -190,10 +258,10 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
                             render={({ field }) => (
                                 <FormItem className="flex-grow">
                                     <FormControl>
-                                        <Input
+                                        <Textarea
                                             placeholder="Type your message..."
                                             {...field}
-                                            className="bg-[#f3f4f6] dark:bg-[#1e1e1e] border-[#e5e7eb] dark:border-[#2d2d2d] rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-[#646cff] dark:focus:ring-[#747bff] focus:ring-offset-0 focus:outline-none"
+                                            className="w-full bg-[#f3f4f6] dark:bg-[#1e1e1e] border-[#e5e7eb] dark:border-[#2d2d2d] rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-[#646cff] dark:focus:ring-[#747bff] focus:ring-offset-0 focus:outline-none"
                                         />
                                     </FormControl>
                                 </FormItem>

@@ -8,7 +8,11 @@ const fetchOldMessages = async (
     userid?: string
 ): Promise<Message[]> => {
     try {
-        const query = [Query.equal("sentTo", id)];
+        //TODO:add pagination to fetch old msgs more than 100
+
+        //query to fetch group msgs
+        const query = [Query.equal("sentTo", id), Query.limit(100)];
+        //queryTwo to fetch private conversation
         const queryTwo = [
             Query.or([
                 Query.and([
@@ -20,6 +24,7 @@ const fetchOldMessages = async (
                     Query.equal("sentTo", userid || ""),
                 ]),
             ]),
+            Query.limit(100),
         ];
         const data = await databases.listDocuments(
             db,
@@ -27,6 +32,7 @@ const fetchOldMessages = async (
             userid ? queryTwo : query
         );
         return data.documents.map((message: any) => ({
+            id: message.$id,
             username: message.username,
             userid: message.userid,
             content: message.content,
@@ -43,7 +49,7 @@ const Page = async ({
     searchParams,
 }: {
     params: Promise<{ id: string }>;
-    searchParams: Promise<{ privateChat?: string; userid?: string }>;
+    searchParams: Promise<{ userid?: string }>;
 }) => {
     const { id } = await params;
     const { userid } = await searchParams;

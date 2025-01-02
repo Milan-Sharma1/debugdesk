@@ -24,6 +24,8 @@ const Page = () => {
         try {
             const data = await databases.listDocuments(db, msg, [
                 Query.equal("sentTo", user.$id),
+                Query.orderDesc("$createdAt"),
+                Query.limit(20),
             ]);
             console.log(data);
             if (!data) return [];

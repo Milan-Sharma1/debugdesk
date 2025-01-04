@@ -26,7 +26,6 @@ const Page = () => {
                 Query.orderDesc("$createdAt"),
                 Query.limit(20),
             ]);
-            console.log(data);
             if (!data) return [];
             const newData = data.documents.map((message: any) => ({
                 username: message.username,
@@ -66,9 +65,6 @@ const Page = () => {
     return (
         <div className="bg-background min-h-screen p-8">
             <div className="max-w-2xl mx-auto bg-background rounded-lg shadow-lg overflow-hidden">
-                {/* <h1 className="text-2xl font-bold text-gray-100 p-4 border-b border-gray-700">
-                    Message Center
-                </h1> */}
                 <ul className="divide-y divide-gray-700">
                     {messages.map((message, index) => {
                         return (
@@ -77,7 +73,6 @@ const Page = () => {
                                 className="p-4 hover:bg-gray-700 transition-colors"
                             >
                                 <button
-                                    // href={`/chat/${message.userid}?userid=${user.$id}`}
                                     onClick={() =>
                                         router.replace(
                                             `/chat/${message.userid}?userid=${user.$id}`

@@ -20,7 +20,6 @@ const geistMono = localFont({
 });
 //TODO: Add data for seo
 //TODO: add search with particial matching
-//TODO: add tag searching 
 export const metadata: Metadata = {
     title: "Debug Desk | Your Knowledge-Sharing Hub",
     description:

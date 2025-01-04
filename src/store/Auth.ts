@@ -88,7 +88,7 @@ export const useAuthStore = create<IAuthStore>()(
                     set({ session, user, jwt });
                     if(!user.emailVerification){
                         await account.createVerification(
-                            "https://debugdesk.milansharma.me/register/verify/"
+                            "https://www.debugdesk.milansharma.me/register/verify/"
                         );
                     }
                     return { success: true };
@@ -108,6 +108,7 @@ export const useAuthStore = create<IAuthStore>()(
                     set({ session: null, jwt: null, user: null });
                 } catch (error) {
                     console.log(error);
+                    set({ session: null, jwt: null, user: null });
                 }
             },
             async createAccount(name: string, email: string, password: string) {
@@ -132,8 +133,8 @@ export const useAuthStore = create<IAuthStore>()(
                 try {
                     account.createOAuth2Session(
                         OAuthProvider.Google, // provider
-                        "https://debugdesk.milansharma.me/", // redirect here on success
-                        "https://debugdesk.milansharma.me/login" // redirect here on failure
+                        "https://www.debugdesk.milansharma.me/", // redirect here on success
+                        "https://www.debugdesk.milansharma.me/login" // redirect here on failure
                     );
                 } catch (error) {
                     console.log(error);

@@ -22,31 +22,39 @@ const Verify = () => {
             return;
         }
         const verifyEmail = async () => {
-            const response = await fetch("/api/emailVerify", {
-                method: "PUT",
-                cache: "no-store", // Disable caching
-                body: JSON.stringify({
-                    userId,
-                    secret,
-                }),
-            })
-                .then(async (res) => await res.json())
-                .catch((err) => {
-                    console.log(err);
-                    return null;
+            try {
+                const response = await fetch("/api/emailVerify", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    cache: "no-store", // Disable caching
+                    body: JSON.stringify({
+                        userId,
+                        secret,
+                    }),
                 });
-            if (!response || !response?.success) {
-                window.alert(
-                    "Verification failed please login again to reverify"
-                );
-                await logout();
-                router.replace("/login");
-                return;
+                if (!response.ok) {
+                    const { error } = await response.json();
+                    window.alert(
+                        "Verification failed. Please log in again to request a new verification link."
+                    );
+                    toast.error(
+                        error || "Verification failed. Please try again."
+                    );
+                    await logout();
+                    router.replace("/login");
+                    return;
+                }
+                // On successful verification
+                await verifySession();
+                toast.success("Email Verified");
+                setIsVerified(true);
+                router.replace("/");
+            } catch (error) {
+                console.error("Error during email verification:", error);
+                toast.error("An unexpected error occurred. Please try again.");
             }
-            verifySession();
-            toast.success("Email Verified");
-            setIsVerified(true);
-            router.replace("/");
         };
         verifyEmail();
     }, []);

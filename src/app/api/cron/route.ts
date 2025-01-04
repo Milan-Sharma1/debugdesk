@@ -1,6 +1,6 @@
 //cron job to avoid web socket backend server to spin down due to inactivity
 import type { NextRequest } from "next/server";
-
+export const revalidate = 0;
 export async function GET(request: NextRequest) {
     const authHeader = request.headers.get("authorization");
     if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {

@@ -65,8 +65,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## 📫 Contact
 
 Email: [hello@milansharma.me](mailto:hello@milansharma.me)  
-Portfolio: [milansharma.me](https://milansharma.me)
-Milan Sharma - [@MilanSharma103](https://x.com/MilanSharma1034?s=09)
+Portfolio: [milansharma.me](https://milansharma.me)  
+Twitter - [@MilanSharma103](https://x.com/MilanSharma1034?s=09)
 
 Project Link: [https://github.com/Milan-Sharma1/debugdesk](https://github.com/Milan-Sharma1/debugdesk)
 

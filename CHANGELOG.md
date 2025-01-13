@@ -7,7 +7,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* add cron job API endpoint to prevent websocket server inactivity and configure Vercel cron schedule ([1c6654b](https://github.com/Milan-Sharma1/debugdesk/commit/1c6654b9c730d293ea4ccad16d7add2b0dadc4f8))
 * bug fix and add notification for incoming msg ([ba32806](https://github.com/Milan-Sharma1/debugdesk/commit/ba328064f7743c4ae241dd37cb587e386be86836))
 
 ## [1.2.0](https://github.com/Milan-Sharma1/debugdesk/compare/v1.1.0...v1.2.0) (2025-01-02)

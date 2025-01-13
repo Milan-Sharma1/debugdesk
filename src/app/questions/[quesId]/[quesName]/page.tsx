@@ -144,7 +144,7 @@ const Page = async ({
                 refresh
             />
             <div className="relative mx-auto px-4 pb-20 pt-36">
-                <div className="flex">
+                <div className="flex flex-col">
                     <div className="w-full">
                         <h1 className="mb-1 text-3xl font-bold">
                             {question.title}
@@ -160,7 +160,7 @@ const Page = async ({
                             <span>Votes {upvotes.total + downvotes.total}</span>
                         </div>
                     </div>
-                    <span className="flex flex-row w-fit gap-2 items-center justify-center">
+                    <span className="flex w-fit gap-2 items-center justify-center">
                         <CollaborateLive quesId={question.$id} />
                         <Link
                             href="/questions/ask"

@@ -42,12 +42,12 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
             username: "",
             userid: "",
             content: "",
-            sentTo: "",
+            sentTo: String(id),
         },
     });
     useEffect(() => {
-        if (!hydrated || !socket) return;
-        if (user && id) {
+        if (!hydrated || !socket || !id) return;
+        if (user) {
             form.reset({
                 userid: user.$id,
                 username: user.name,
@@ -67,7 +67,7 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
                 setMessages((prevMessages) => [...prevMessages, newMessage]);
             }
         });
-    }, [hydrated, socket]);
+    }, [hydrated, socket, user, form, id]);
 
     useEffect(() => {
         if (!hydrated) return;
@@ -76,14 +76,14 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
             scrollAreaRef.current.scrollIntoView(false);
         }
     }, [messages, hydrated]);
-    const handleMessageSubmit = (data: z.infer<typeof messageValidation>) => {
+    const handleMessageSubmit = (data:z.infer<typeof messageValidation>) => {
         setError("");
         if (!socket) {
             setError("Some issue At Connection Try Reloading the page");
             return;
         }
         if (!user) {
-            window.alert("please login before sending a msg");
+            setError("Please login before sending a msg");
             return;
         }
         setIsLoading(true);
@@ -124,7 +124,7 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
         setTimeout(() => setCopiedId(null), 2000);
     };
     return (
-        <div className="flex flex-col pt-24 mx-3 mb-2 h-screen bg-background ">
+        <div className="flex flex-col pt-24 mx-3 mb-2 h-svh bg-background ">
             <ScrollArea className="flex-1 p-4">
                 <div ref={scrollAreaRef}>
                     {messages.map((msg, index) => (

@@ -124,7 +124,7 @@ const Chat = ({ oldMessages }: { oldMessages: Message[] }) => {
         setTimeout(() => setCopiedId(null), 2000);
     };
     return (
-        <div className="flex flex-col pt-24 mx-3 mb-2 h-screen bg-background ">
+        <div className="flex flex-col pt-24 mx-3 mb-2 h-svh bg-background ">
             <ScrollArea className="flex-1 p-4">
                 <div ref={scrollAreaRef}>
                     {messages.map((msg, index) => (

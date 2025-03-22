@@ -7,6 +7,7 @@ import Header from "../components/home/Header";
 import Footer from "@/components/home/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import { SocketProvider } from "@/context/SocketContext";
+import CanonicalTag from "@/components/CanonicalTag";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -39,6 +40,7 @@ export default function RootLayout({
                 <SocketProvider>
                     <NextTopLoader showSpinner={false} />
                     <Header />
+                    <CanonicalTag/>
                     {children}
                     <Analytics />
                     <Toaster

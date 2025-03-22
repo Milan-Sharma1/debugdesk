@@ -133,8 +133,8 @@ export const useAuthStore = create<IAuthStore>()(
                 try {
                     account.createOAuth2Session(
                         OAuthProvider.Google, // provider
-                        "https://www.debugdesk.milansharma.me/", // redirect here on success
-                        "https://www.debugdesk.milansharma.me/login" // redirect here on failure
+                        "https://debugdesk.milansharma.me/", // redirect here on success
+                        "https://debugdesk.milansharma.me/login" // redirect here on failure
                     );
                 } catch (error) {
                     console.log(error);

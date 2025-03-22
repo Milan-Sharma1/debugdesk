@@ -88,7 +88,7 @@ export const useAuthStore = create<IAuthStore>()(
                     set({ session, user, jwt });
                     if(!user.emailVerification){
                         await account.createVerification(
-                            "https://www.debugdesk.milansharma.me/register/verify/"
+                            `${process.env.NEXT_PUBLIC_BASE_URL}/register/verify/`
                         );
                     }
                     return { success: true };
@@ -133,8 +133,8 @@ export const useAuthStore = create<IAuthStore>()(
                 try {
                     account.createOAuth2Session(
                         OAuthProvider.Google, // provider
-                        "https://www.debugdesk.milansharma.me/", // redirect here on success
-                        "https://www.debugdesk.milansharma.me/login" // redirect here on failure
+                        `${process.env.NEXT_PUBLIC_BASE_URL}/`, // redirect here on success
+                        `${process.env.NEXT_PUBLIC_BASE_URL}/login` // redirect here on failure
                     );
                 } catch (error) {
                     console.log(error);

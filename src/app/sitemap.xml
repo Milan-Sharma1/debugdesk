@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+
+<url>
+  <loc>https://debugdesk.milansharma.me/</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/login</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/register</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions/675c1c3900354e414913/cannot-start-nextjs-with-nginx</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions/675c1b3f003270d3c073/how-does-one-debug-nextjs-react-apps-with-webstorm</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions/675c1a1c0000a8bcb3fd/nextjs-typescript-built-failed-with-auth0nextjs-auth0</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions/675c18b8001eaaac15db/what-causes-nextjs-warning-extra-attributes-from-the-server-data-new-gr-c-s-check-loaded</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions/675c17a60036e26c9717/why-does-my-react-app-freeze-when-handling-large-json-responses-from-an-api-</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions/675c163b000ad3af1997/how-do-i-resolve-the-unhandledpromiserejectionwarning-error-in-nodejs-</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions/675c141100040f19d0f7/why-is-my-nextjs-app-throwing-an-invariant-violation-error-with-zustand</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=nginx</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=linux</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=next.js</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675bfa95000915737568/ketan</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=webstrom</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=reactjs</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=nextjs</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=typescript</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675b4916cc44011875d0/milan-sharma</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=javascript</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=React</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=frontend</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/about</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/privacy-policy</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/terms-of-service</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions/ask</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/questions?tag=nodejs</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675bfa95000915737568/ketan/questions</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675bfa95000915737568/ketan/answers</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675bfa95000915737568/ketan/votes</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675b4916cc44011875d0/milan-sharma/questions</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675b4916cc44011875d0/milan-sharma/answers</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675b4916cc44011875d0/milan-sharma/votes</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675bfa95000915737568/ketan/votes?voteStatus=upvoted</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675bfa95000915737568/ketan/votes?voteStatus=downvoted</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675b4916cc44011875d0/milan-sharma/votes?voteStatus=upvoted</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://debugdesk.milansharma.me/users/675b4916cc44011875d0/milan-sharma/votes?voteStatus=downvoted</loc>
+  <lastmod>2025-03-22T09:39:06+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>

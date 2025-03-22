@@ -88,7 +88,7 @@ export const useAuthStore = create<IAuthStore>()(
                     set({ session, user, jwt });
                     if(!user.emailVerification){
                         await account.createVerification(
-                            "https://www.debugdesk.milansharma.me/register/verify/"
+                            "https://debugdesk.milansharma.me/register/verify/"
                         );
                     }
                     return { success: true };

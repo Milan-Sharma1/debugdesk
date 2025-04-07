@@ -27,7 +27,7 @@ export default async function HeroSection() {
                 link: `/questions/${q.$id}/${slugify(q.title)}`,
                 thumbnail: !q.attachmentId
                     ? undefined
-                    : storage.getFilePreview(
+                    : storage.getFileView(
                           questionAttachmentBucket,
                           q.attachmentId
                       ),

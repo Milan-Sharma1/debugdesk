@@ -147,7 +147,7 @@ const TermsOfService: React.FC = () => {
                         href="mailto:hello@milansharma.me"
                         className="text-blue-400"
                     >
-                        hello@milansharma.me
+                        hello@milansharma.tech
                     </a>
                     .
                 </p>

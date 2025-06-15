@@ -129,10 +129,10 @@ const PrivacyPolicy: React.FC = () => {
                     If you have any questions or concerns regarding this Privacy
                     Policy, please feel free to reach out to us at
                     <a
-                        href="mailto:hello@milansharma.me"
+                        href="mailto:hello@milansharma.tech"
                         className="text-blue-400"
                     >
-                        hello@milansharma.me
+                        hello@milansharma.tech
                     </a>
                     .
                 </p>

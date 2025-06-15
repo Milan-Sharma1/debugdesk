@@ -144,7 +144,7 @@ const TermsOfService: React.FC = () => {
                     If you have any questions about these Terms of Service,
                     please contact us at{" "}
                     <a
-                        href="mailto:hello@milansharma.me"
+                        href="mailto:hello@milansharma.tech"
                         className="text-blue-400"
                     >
                         hello@milansharma.tech
